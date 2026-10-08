@@ -671,9 +671,9 @@
       ];
 
       const salespeople = [
-        { id: "a", name: "业务员 A", whatsapp: "https://wa.me/8613950711826" },
-        { id: "b", name: "业务员 B", whatsapp: "https://wa.me/8618050593213" },
-        { id: "c", name: "业务员 C", whatsapp: "https://wa.me/8613959573877" }
+        { id: "a", name: "业务员 A", whatsapp: "https://wa.me/8613959573877" },
+        { id: "b", name: "业务员 B", whatsapp: "https://wa.me/8613950711826" },
+        { id: "c", name: "业务员 C", whatsapp: "https://wa.me/8618050593213" }
       ];
 
       const storageKey = "wa_random_assigned_salesperson_v1";
@@ -681,6 +681,14 @@
       const mainSkuName = "Urban Crossbody Bag";
       let qty = 1;
       const price = 288;
+      const whatsappOpeningMessage = [
+        "Hi \u{1F90D} I found this handbag from your ad.",
+        "I love the design and would like to know:",
+        "",
+        "1. Available colors?",
+        "2. Shipping time?",
+        "3. Best price today?"
+      ].join("\n");
       let activeImageIndex = 0;
       let inquiryProduct = params.get("product") || params.get("entry") || mainSkuName;
 
@@ -764,14 +772,8 @@
 
       function openSkuWhatsApp() {
         setInquiryProduct(mainSkuName);
-        const message = [
-          `Hello, I came in from: ${mainSkuName}.`,
-          `Selected price: $${price}.`,
-          `I would like more details, colors, stock, and the best price.`
-        ].join("\n");
-
         trackContactEvent(mainSkuName, "main_sku");
-        redirectToWhatsApp(buildWhatsAppUrl(assigned.person, message));
+        redirectToWhatsApp(buildWhatsAppUrl(assigned.person, whatsappOpeningMessage));
       }
 
       document.getElementById("minus").addEventListener("click", () => updateQty(qty - 1));
